@@ -58,6 +58,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6837caf0c4ae2b64b909324f4d7aa40d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateSpeed: 1
+  floatSpeed: 0.5
+  movementDistance: 0.5
+  collectCoinEffect: {fileID: 152044, guid: aab445942419bba41ae49d724a759450, type: 3}
 --- !u!1 &137256
 GameObject:
   m_ObjectHideFlags: 0

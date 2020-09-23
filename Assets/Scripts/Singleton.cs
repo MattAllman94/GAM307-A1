@@ -21,7 +21,7 @@ public class Singleton <T>:MonoBehaviour where T:MonoBehaviour
             return instance_;
         }
     }
-    protected virtual void Awake ()
+    public virtual void Awake ()
     { if (instance_ == null )
         {
             instance_ =this as T;

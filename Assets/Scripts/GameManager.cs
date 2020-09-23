@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
 
     private float _timeRemaining;
     private float maxTime = 2 * 60;
+    private int numCoins;
 
     private void Start()
     {
@@ -20,7 +21,7 @@ public class GameManager : Singleton<GameManager>
 
         if(TimeRemaining <= 0)
         {
-            EditorSceneManager.LoadScene(this);
+            EditorSceneManager.GetActiveScene();
             TimeRemaining = maxTime;
         }
     }
@@ -37,6 +38,16 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-
+    public int NumCoins
+    {
+        get
+        {
+            return numCoins;
+        }
+        set
+        {
+            numCoins = value;
+        }
+    }
 
 }

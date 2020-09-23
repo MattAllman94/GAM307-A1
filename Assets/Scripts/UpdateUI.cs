@@ -7,20 +7,16 @@ public class UpdateUI : MonoBehaviour
 {
 
     public Text timerLabel;
+    public Text coinLabel;
        
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         timerLabel.text = FormatTime(GameManager.instance.TimeRemaining);
+        coinLabel.text = GameManager.instance.NumCoins.ToString();
     }
 
     private string FormatTime(float timeInSeconds)
     {
-        return string.Format("(0) : (1:00)", Mathf.FloorToInt(timeInSeconds / 60), Mathf.FloorToInt(timeInSeconds % 60));
+        return string.Format("{0} : {1:00}", Mathf.FloorToInt(timeInSeconds / 60), Mathf.FloorToInt(timeInSeconds % 60));
     }
 }

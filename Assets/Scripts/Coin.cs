@@ -6,6 +6,7 @@ public class Coin : MonoBehaviour
 {
 
     public float rotateSpeed = 1.0f, floatSpeed = 0.5f, movementDistance = 0.5f;
+    public GameObject collectCoinEffect;
 
     private float startingY;
     private bool isMovingUp = true;
@@ -48,5 +49,20 @@ public class Coin : MonoBehaviour
             yield return 0;
         }
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            Pickup();
+        }
+    }
+
+    private void Pickup()
+    {
+        GameManager.instance.NumCoins++;
+        Instantiate(collectCoinEffect, transform.position, transform.rotation);
+        Destroy(gameObject);
+    }
+
 }
