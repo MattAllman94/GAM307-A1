@@ -10,6 +10,7 @@ public class UpdateUI : MonoBehaviour
     public Text timerLabel;
     public Text coinLabel;
     public Text healthLabel;
+    public GameObject wonGamePanel;
        
     void Update()
     {

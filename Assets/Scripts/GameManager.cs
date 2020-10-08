@@ -10,14 +10,20 @@ public class GameManager : Singleton<GameManager>
 
     private float _timeRemaining;
     private float maxTime = 2 * 60;
+   
     private int numCoins;
+    private int totalCoinsInLevel;
+   
     private int maxHealth = 5;
     private bool isInvulnerable = false;
+
+    private bool gameOver = false;
 
     private void Start()
     {
         TimeRemaining = maxTime;
         PlayerHealth = maxHealth;
+        totalCoinsInLevel = GameObject.FindGameObjectsWithTag("Coin").Length;
     }
 
     public void Update()
@@ -28,6 +34,11 @@ public class GameManager : Singleton<GameManager>
         {
             Restart();
         }
+
+        if(numCoins == totalCoinsInLevel && !gameOver)
+        {
+            StartCoroutine(WonGame());
+        }
     }
 
     public void Restart()
@@ -35,7 +46,7 @@ public class GameManager : Singleton<GameManager>
         EditorSceneManager.LoadScene(EditorSceneManager.GetActiveScene().name);
         TimeRemaining = maxTime;
         PlayerHealth = maxHealth;
-        print("Restart Game");
+        //print("Restart Game");
     }
 
     public float TimeRemaining
@@ -107,5 +118,13 @@ public class GameManager : Singleton<GameManager>
         isInvulnerable = true;
         yield return new WaitForSeconds(1.0f);
         isInvulnerable = false;
+    }
+
+    private IEnumerator WonGame()
+    {
+        gameOver = true;
+        FindObjectOfType<UpdateUI>().wonGamePanel.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Restart();
     }
 }
