@@ -48,6 +48,7 @@ public class Enemy : MonoBehaviour {
 			{
 				StopCoroutine(turnTowardsPlayerCoroutine);
 				StopCoroutine(moveTowardsPlayerCoroutine);
+				animatorComponent.SetTrigger("Idle");
 			}
 		}
 	}
@@ -60,6 +61,7 @@ public class Enemy : MonoBehaviour {
 		}
 
 		isDead = true;
+		animatorComponent.SetTrigger("Die");
 
 		StopCoroutine (turnTowardsPlayerCoroutine);
 		StopCoroutine (moveTowardsPlayerCoroutine);
@@ -82,7 +84,7 @@ public class Enemy : MonoBehaviour {
 
 	private IEnumerator MoveTowardsPlayer(Transform player)
 	{
-
+		animatorComponent.SetTrigger("Walk");
 		while (true)
 		{
 			Vector3 playerDirection = transform.position - player.position;
@@ -99,4 +101,6 @@ public class Enemy : MonoBehaviour {
 			yield return 0;
 		}
 	}
+
+	
 }
