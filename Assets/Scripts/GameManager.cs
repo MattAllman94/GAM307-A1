@@ -32,7 +32,7 @@ public class GameManager : Singleton<GameManager>
 
     public void Restart()
     {
-        EditorSceneManager.GetActiveScene();
+        EditorSceneManager.LoadScene(EditorSceneManager.GetActiveScene().name);
         TimeRemaining = maxTime;
         PlayerHealth = maxHealth;
         print("Restart Game");
