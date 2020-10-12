@@ -5,6 +5,15 @@ using System.Runtime.InteropServices;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
+public enum GameState
+{
+    TITLE,
+    INGAME,
+    PAUSED,
+    GAMEOVER,
+    WIN
+}
+
 public class GameManager : Singleton<GameManager>
 {
 
@@ -19,8 +28,14 @@ public class GameManager : Singleton<GameManager>
 
     private bool gameOver = false;
 
+    public GameState gameState;
+
     private void Start()
     {
+        gameState = GameState.TITLE; //Initialise GameState as Title
+        GameEvents.ReportGameStateChange(gameState);
+        FindObjectOfType<UpdateUI>().wonGamePanel.SetActive(true);
+
         TimeRemaining = maxTime;
         PlayerHealth = maxHealth;
         totalCoinsInLevel = GameObject.FindGameObjectsWithTag("Coin").Length;
