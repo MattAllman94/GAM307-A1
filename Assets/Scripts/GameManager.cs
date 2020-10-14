@@ -5,17 +5,11 @@ using System.Runtime.InteropServices;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public enum GameState
-{
-    TITLE,
-    INGAME,
-    PAUSED,
-    GAMEOVER,
-    WIN
-}
+
 
 public class GameManager : Singleton<GameManager>
 {
+    public GameObject player; //added to be able to disable when in title screen
 
     private float _timeRemaining;
     private float maxTime = 2 * 60;
@@ -28,14 +22,16 @@ public class GameManager : Singleton<GameManager>
 
     private bool gameOver = false;
 
-    public GameState gameState;
+    
 
     private void Start()
     {
-        gameState = GameState.TITLE; //Initialise GameState as Title
-        GameEvents.ReportGameStateChange(gameState);
-        FindObjectOfType<UpdateUI>().wonGamePanel.SetActive(true);
+        
+        FindObjectOfType<UpdateUI>().wonGamePanel.SetActive(false);
+        FindObjectOfType<UpdateUI>().loseGamePanel.SetActive(false);
+        player.SetActive(false);
 
+        Time.timeScale = 0f;
         TimeRemaining = maxTime;
         PlayerHealth = maxHealth;
         totalCoinsInLevel = GameObject.FindGameObjectsWithTag("Coin").Length;
@@ -47,22 +43,26 @@ public class GameManager : Singleton<GameManager>
 
         if(TimeRemaining <= 0)
         {
-            Restart();
+            FindObjectOfType<UpdateUI>().loseGamePanel.SetActive(true); //lose screen shows when time hits 0
+            Time.timeScale = 0f;
+            TimeRemaining = maxTime;
+            PlayerHealth = maxHealth;
         }
 
         if(numCoins == totalCoinsInLevel && !gameOver)
         {
-            StartCoroutine(WonGame());
+            WonGame();
         }
     }
 
+    /*  - Old Restart Code
     public void Restart()
     {
         EditorSceneManager.LoadScene(EditorSceneManager.GetActiveScene().name);
         TimeRemaining = maxTime;
         PlayerHealth = maxHealth;
         //print("Restart Game");
-    }
+    } */
 
     public float TimeRemaining
     {
@@ -109,7 +109,10 @@ public class GameManager : Singleton<GameManager>
 
         if(PlayerHealth <= 0)
         {
-            Restart();
+            FindObjectOfType<UpdateUI>().loseGamePanel.SetActive(true); //lose screen shows when health hits 0
+            Time.timeScale = 0f;
+            TimeRemaining = maxTime;
+            PlayerHealth = maxHealth;
         }
     }
 
@@ -118,14 +121,18 @@ public class GameManager : Singleton<GameManager>
         return PlayerHealth / (float)maxHealth;
     }
 
+   
+
     void OnEnable()
     {
         DamagePlayerEvent.OnDamagePlayer += DecrementPlayerHealth;
+        
     }
 
     void OnDisable()
     {
         DamagePlayerEvent.OnDamagePlayer -= DecrementPlayerHealth;
+        
     }
 
     private IEnumerator InvulnerableDelay()
@@ -135,11 +142,15 @@ public class GameManager : Singleton<GameManager>
         isInvulnerable = false;
     }
 
-    private IEnumerator WonGame()
+    private void WonGame()
     {
         gameOver = true;
         FindObjectOfType<UpdateUI>().wonGamePanel.SetActive(true);
-        yield return new WaitForSeconds(3);
-        Restart();
+        //yield return new WaitForSeconds(3);  -> Original Code
+        //Restart(); -> Original Code
+        Time.timeScale = 0f;
+        TimeRemaining = maxTime;
+        PlayerHealth = maxHealth;
+        
     }
 }
