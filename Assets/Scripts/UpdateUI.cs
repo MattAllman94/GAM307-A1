@@ -16,7 +16,6 @@ public class UpdateUI : MonoBehaviour
     public GameObject titlePanel; //added title panel
     public GameObject loseGamePanel; //added lose panel
     
-    public GameObject titleCamera; //added to enable the player to be disabled when on title screen
 
        
     void Update()
@@ -40,15 +39,15 @@ public class UpdateUI : MonoBehaviour
     public void PlayGame() //Starts the game when the play button is pressed
     {
         titlePanel.SetActive(false);
-        Time.timeScale = 1f;
-        FindObjectOfType<GameManager>().player.SetActive(true);
-        titleCamera.SetActive(false);
+        Time.timeScale = 1f; //starts the game timer
+        FindObjectOfType<GameManager>().player.SetActive(true); //sets the player model to active so the camera starts pointing forward rather than the ground
+        
     }
 
     public void QuitGame() //Allows for the game to quit when the Exit button is pressed
     {
         Application.Quit();
-        Debug.Log("Quit Game");
+        //Debug.Log("Quit Game");
     }
 
     public void Restart() //Restarts the game after winning (Restarting isn't working)
@@ -57,7 +56,7 @@ public class UpdateUI : MonoBehaviour
         titlePanel.SetActive(false);
         Time.timeScale = 0f;
         FindObjectOfType<GameManager>().player.SetActive(true);
-        titleCamera.SetActive(false);
+       
         
     }
 

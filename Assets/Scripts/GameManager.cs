@@ -45,8 +45,8 @@ public class GameManager : Singleton<GameManager>
         {
             FindObjectOfType<UpdateUI>().loseGamePanel.SetActive(true); //lose screen shows when time hits 0
             Time.timeScale = 0f;
-            TimeRemaining = maxTime;
-            PlayerHealth = maxHealth;
+            TimeRemaining = maxTime; //resets time
+            PlayerHealth = maxHealth; //resets health
         }
 
         if(numCoins == totalCoinsInLevel && !gameOver)
