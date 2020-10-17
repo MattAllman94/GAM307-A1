@@ -60,11 +60,11 @@ public class Potion : MonoBehaviour //Copied Coin Script and adapted for potions
         }
     }
 
-    private void HealthPickup() //attempting to heal player only when less than 100% health
+    private void HealthPickup() // heal player only when less than 100% health
     {
-        if(GameManager.instance.PlayerHealth < 100)
+        if(GameManager.instance.PlayerHealth < 5)
         {
-            GameManager.instance.PlayerHealth = Mathf.Clamp(GameManager.instance.PlayerHealth + 1, 0, 100); //attempt at having the health increase by 20 to the max of 100
+            GameManager.instance.PlayerHealth = Mathf.Clamp(GameManager.instance.PlayerHealth + 1, 0, 5);
             Instantiate(collectPotionEffect, transform.position, transform.rotation);
             Destroy(gameObject);
         }
